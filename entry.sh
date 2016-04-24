@@ -1,15 +1,12 @@
 #!/bin/sh
 
-docker rm -fv $COMMIT
-
-# Create a data container to share source code
-# across the builders
+echo "Creating data container for build: $COMMIT"
 docker create -v /$COMMIT \
        --name $COMMIT \
        tianon/true:latest true
 
-# Get source to build
-docker run \
+echo "Get source to build $REPOSITORY_GIT_HTTP_URL:$COMMIT"
+docker run --rm \
        --volumes-from $COMMIT \
        -w /$COMMIT \
        --entrypoint=/bin/sh  \
@@ -17,7 +14,7 @@ docker run \
 /usr/bin/git -C ./ fetch $REPOSITORY_GIT_HTTP_URL $REF && \
 /usr/bin/git -C ./ checkout $COMMIT"
 
-# Build Docker image
+echo "Build Docker image $IMAGE:latest"
 docker run --rm \
        -e COMMAND=build \
        -e IMAGE=$IMAGE \
@@ -27,7 +24,7 @@ docker run --rm \
        -w /$COMMIT \
        leanlabs/docker
 
-# Publish docker image
+echo "Publish docker image: $IMAGE:latest"
 docker run --rm \
        -e COMMAND=publish \
        -e DOCKER_HUB_USERAME=$DOCKER_HUB_USERNAME \
@@ -36,3 +33,6 @@ docker run --rm \
        -e TAG=latest \
        -v /var/run/docker.sock:/var/run/docker.sock \
        leanlabs/docker
+
+echo "Cleaning up"
+docker rm -fv $COMMIT
