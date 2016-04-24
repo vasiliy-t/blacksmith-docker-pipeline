@@ -8,26 +8,14 @@ docker create -v /$COMMIT \
        --name $COMMIT \
        tianon/true:latest true
 
-# Initialize empty repository
+# Get source to build
 docker run \
        --volumes-from $COMMIT \
-       -w "/$COMMIT" \
-       leanlabs/git-builder:latest \
-       -C ./ init
-
-# Fetch git ref from target repository to act on
-docker run --rm \
-       --volumes-from $COMMIT \
-       --workdir /$COMMIT \
-       leanlabs/git-builder:latest \
-       -C ./ fetch $REPOSITORY_GIT_HTTP_URL $REF
-
-# Checkout commit to act on
-docker run --rm \
-       --volumes-from $COMMIT \
-       --workdir /$COMMIT \
-       leanlabs/git-builder:latest \
-       -C ./ checkout $COMMIT
+       --workdir "/$COMMIT" \
+       --entrypoint=/bin/sh  \
+       leanlabs/git:latest -c "/usr/bin/git -C ./ init && \
+/usr/bin/git -C ./ fetch $REPOSITORY_GIT_HTTP_URL $REF && \
+/usr/bin/git -C ./ checkout $COMMIT"
 
 # Build Docker image
 docker run --rm \
@@ -38,7 +26,7 @@ docker run --rm \
        --workdir /$COMMIT \
        leanlabs/image-builder
 
-# Login to docker hub and push image
+# Publish docker image
 docker login --username $DOCKER_HUB_LOGIN --password $DOCKER_HUB_PASSWORD
 
 docker push $DOCKER_IMAGE_NAME:latest
