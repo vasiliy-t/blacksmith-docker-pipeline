@@ -11,7 +11,7 @@ docker create -v /$COMMIT \
 # Get source to build
 docker run \
        --volumes-from $COMMIT \
-       --workdir "/$COMMIT" \
+       -w /$COMMIT \
        --entrypoint=/bin/sh  \
        leanlabs/git:latest -c "/usr/bin/git -C ./ init && \
 /usr/bin/git -C ./ fetch $REPOSITORY_GIT_HTTP_URL $REF && \
@@ -24,11 +24,12 @@ docker run --rm \
        -e TAG=latest \
        --volumes-from $COMMIT \
        -v /var/run/docker.sock:/var/run/docker.sock \
-       --workdir /$COMMIT \
+       -w /$COMMIT \
        leanlabs/docker
 
 # Publish docker image
 docker run --rm \
+       -e COMMAND=publish \
        -e DOCKER_HUB_USERAME=$DOCKER_HUB_USERNAME \
        -e DOCKER_HUB_PASSWORD=$DOCKER_HUB_PASSWORD \
        -e IMAGE=$IMAGE \
