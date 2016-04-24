@@ -5,13 +5,16 @@ ENV REPOSITORY_GIT_HTTP_URL="myrepo" \
     BEFORE="beforecommitid" \
     COMMIT="committobuild" \
     DOCKER_HUB_LOGIN=qwerty \
-    DOCKER_HUB_EMAIL=qwerty@qwerty.com \
     DOCKER_HUB_PASSWORD=qwerty \
     DOCKER_IMAGE_NAME="namespace/name"
 
-ADD https://get.docker.com/builds/Linux/x86_64/docker-1.10.1 /usr/bin/docker
-COPY ./entry.sh /entry.sh
+RUN apk add --update curl && \
+    curl -o docker.tgz https://get.docker.com/builds/Linux/x86_64/docker-1.11.0.tgz && \
+    tar -xzvf docker.tgz && \
+    mv docker/docker /usr/local/bin/docker && \
+    apk del --purge curl && \
+    rm -rf /var/cache/apk/*
 
-RUN chmod +x /usr/bin/docker
+COPY ./ /
 
 CMD ["/bin/sh", "/entry.sh"]
