@@ -25,3 +25,15 @@ docker run --rm \
 This command will clone the repo from github, build the image and publish it to docker hub. **NOTE** There must be Dockerfile in the repo root dir, otherwise build will fail.
 
 Image is stateless, it doesn't stores any credentials after or previous build info.
+
+### Environment variables
+
+**REPOSITORY_GIT_HTTP_URL** - git repository clone url, HTTP or HTTPS
+
+**COMMIT** - git repo commit to checkout
+
+**DOCKER_HUB_USERNAME** - your docker hub account username
+
+**DOCKER_HUB_PASSWORD** - your docker hub account password
+
+**IMAGE**  - docker image to build and push
