@@ -4,7 +4,7 @@ ENV REPOSITORY_GIT_HTTP_URL="myrepo" \
     REPOSITORY_NAME="reponame" \
     BEFORE="beforecommitid" \
     COMMIT="committobuild" \
-    DOCKER_HUB_LOGIN=qwerty \
+    DOCKER_HUB_USERNAME=qwerty \
     DOCKER_HUB_PASSWORD=qwerty \
     DOCKER_IMAGE_NAME="namespace/name"
 

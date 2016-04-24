@@ -27,6 +27,10 @@ docker run --rm \
        leanlabs/image-builder
 
 # Publish docker image
-docker login --username $DOCKER_HUB_LOGIN --password $DOCKER_HUB_PASSWORD
-
-docker push $DOCKER_IMAGE_NAME:latest
+docker run --rm \
+       -e DOCKER_HUB_USERAME=$DOCKER_HUB_USERNAME \
+       -e DOCKER_HUB_PASSWORD=$DOCKER_HUB_PASSWORD \
+       -e DOCKER_IMAGE_NAME=$DOCKER_IMAGE_NAME \
+       -e DOCKER_IMAGE_TAG=latest \
+       -v /var/run/docker.sock:/var/run/docker.sock \
+       leanlabs/docker-hub-publisher
