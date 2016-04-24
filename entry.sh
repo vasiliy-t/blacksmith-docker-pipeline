@@ -20,17 +20,18 @@ docker run \
 # Build Docker image
 docker run --rm \
        -e COMMAND=build \
-       -e IMAGE=$DOCKER_IMAGE_NAME \
+       -e IMAGE=$IMAGE \
+       -e TAG=latest \
        --volumes-from $COMMIT \
        -v /var/run/docker.sock:/var/run/docker.sock \
        --workdir /$COMMIT \
-       leanlabs/image-builder
+       leanlabs/docker
 
 # Publish docker image
 docker run --rm \
        -e DOCKER_HUB_USERAME=$DOCKER_HUB_USERNAME \
        -e DOCKER_HUB_PASSWORD=$DOCKER_HUB_PASSWORD \
-       -e DOCKER_IMAGE_NAME=$DOCKER_IMAGE_NAME \
-       -e DOCKER_IMAGE_TAG=latest \
+       -e IMAGE=$IMAGE \
+       -e TAG=latest \
        -v /var/run/docker.sock:/var/run/docker.sock \
-       leanlabs/docker-hub-publisher
+       leanlabs/docker

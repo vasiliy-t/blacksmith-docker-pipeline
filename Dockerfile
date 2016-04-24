@@ -6,7 +6,7 @@ ENV REPOSITORY_GIT_HTTP_URL="myrepo" \
     COMMIT="committobuild" \
     DOCKER_HUB_USERNAME=qwerty \
     DOCKER_HUB_PASSWORD=qwerty \
-    DOCKER_IMAGE_NAME="namespace/name"
+    IMAGE="namespace/name"
 
 RUN apk add --update curl && \
     curl -o docker.tgz https://get.docker.com/builds/Linux/x86_64/docker-1.11.0.tgz && \
