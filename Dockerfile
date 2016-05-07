@@ -1,14 +1,12 @@
 FROM alpine:3.3
 
-ENV REPOSITORY_GIT_HTTP_URL="myrepo" \
-    REPOSITORY_NAME="reponame" \
-    BEFORE="beforecommitid" \
-    COMMIT="committobuild" \
-    DOCKER_HUB_USERNAME=qwerty \
-    DOCKER_HUB_PASSWORD=qwerty \
+ENV EVENT_NAME="push" \
+    EVENT_PAYLOAD="{}" \
+    DOCKER_HUB_USERNAME="qwerty" \
+    DOCKER_HUB_PASSWORD="qwerty" \
     IMAGE="namespace/name"
 
-RUN apk add --update curl && \
+RUN apk add --update curl jq && \
     curl -o docker.tgz https://get.docker.com/builds/Linux/x86_64/docker-1.11.0.tgz && \
     tar -xzvf docker.tgz && \
     mv docker/docker /usr/local/bin/docker && \
