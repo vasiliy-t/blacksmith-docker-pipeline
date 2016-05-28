@@ -1,5 +1,7 @@
 # Blacksmith CI Docker pipeline
 
+[![](https://imagelayers.io/badge/blacksmithci/docker-pipeline:latest.svg)](https://imagelayers.io/?images=blacksmithci/docker-pipeline:latest 'Get your own badge on imagelayers.io')
+
 Blacksmith CI docker images pipeline, implements full pipeline to build and publish docker images to hub.
 
 Step by step flow:
