@@ -1,6 +1,6 @@
-# Blacksmith CI Docker builder
+# Blacksmith CI Docker pipeline
 
-Blacksmith CI docker images builder, implements full pipeline to build and publish docker images to hub.
+Blacksmith CI docker images pipeline, implements full pipeline to build and publish docker images to hub.
 
 Step by step flow:
 
